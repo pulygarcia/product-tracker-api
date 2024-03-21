@@ -1,0 +1,16 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "type": "module", 
+  "description": "product-tracking-backend",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "node --watch index.js"
+  },
+  "author": "pulygarcia",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.19.1"
+  }
+}
