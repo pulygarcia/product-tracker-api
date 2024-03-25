@@ -1,3 +1,4 @@
+import mongoose from 'mongoose';
 import {products} from '../data/productsList.js';
 import Product from '../models/prodcutsModel.js';
 
@@ -34,7 +35,26 @@ const getAllProducts = async (req, res) => {
     }
 }
 
+const getProductById = async (req, res) => {
+    const id = req.params.id;
+    //validate OBJECT ID with mongoose
+    if(!mongoose.Types.ObjectId.isValid(id)){
+        const error = new Error('invalid ID');
+        return res.status(400).json({
+            msg: error.message
+        })
+    }
+
+    //validate if exist in db
+    const product = await Product.findById(id);
+    //console.log(product);
+
+    //Show product
+    res.json(product);
+}
+
 export {
     createProduct,
-    getAllProducts
+    getAllProducts,
+    getProductById
 }
