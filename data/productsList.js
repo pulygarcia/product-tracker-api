@@ -23,4 +23,12 @@ export const products = [
         category: 'Peripherals',
         quantity: 6
     },
+    { 
+        name: 'Gabinete Versa c22',
+        image: 'https://i.blogs.es/4e0408/pc-9/450_1000.webp',
+        price: 230,
+        brand: 'Thermaltake',
+        category: 'Hardware',
+        quantity: 2
+    },
   ];
