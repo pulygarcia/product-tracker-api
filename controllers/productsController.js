@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 import {products} from '../data/productsList.js';
 import Product from '../models/prodcutsModel.js';
+import {isValidId, productNotFoundError} from '../helpers/index.js'
 
 const createProduct = async (req, res) => {
     //console.log('Creating product...');
@@ -38,23 +39,81 @@ const getAllProducts = async (req, res) => {
 const getProductById = async (req, res) => {
     const id = req.params.id;
     //validate OBJECT ID with mongoose
-    if(!mongoose.Types.ObjectId.isValid(id)){
-        const error = new Error('invalid ID');
-        return res.status(400).json({
-            msg: error.message
-        })
+    if(isValidId(id, res)){
+        return;
     }
 
     //validate if exist in db
     const product = await Product.findById(id);
-    //console.log(product);
+    if(!product){
+        return productNotFoundError('Product not found', res);
+    }
 
     //Show product
     res.json(product);
 }
 
+
+const updateProduct = async (req, res) => {
+    const id = req.params.id;
+    if(isValidId(id, res)){
+        return;
+    }
+
+    const product = await Product.findById(id);
+
+    if(!product){
+        return productNotFoundError('Product not found', res);
+    }
+
+    //Rewrite in service the new values if there are, if there aren't. Keep the sames.
+    product.name = req.body.name || product.name;
+    product.price = req.body.price || product.price;
+    product.category = req.body.category || product.category;
+    product.quantity = req.body.quantity || product.quantity;
+    product.image = req.body.image || product.image;
+    product.brand = req.body.brand || product.brand;
+
+    //Save the changes
+    try {
+        await product.save();
+
+        res.json({
+            msg: 'Updated correctly'
+        })
+
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+const deleteProduct = async (req, res) => {
+    const id = req.params.id;
+    //Same validations
+    if(isValidId(id, res)){
+        return;
+    }
+
+    const product = await Product.findById(id);
+    if(!product){
+        return productNotFoundError('Product not found', res);
+    }
+
+    try {
+        await product.deleteOne();
+
+        res.json({
+            msg: 'Deleted successfully'
+        })
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 export {
     createProduct,
     getAllProducts,
-    getProductById
+    getProductById,
+    updateProduct,
+    deleteProduct
 }
