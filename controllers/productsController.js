@@ -1,7 +1,6 @@
-import mongoose from 'mongoose';
-import {products} from '../data/productsList.js';
 import Product from '../models/prodcutsModel.js';
 import {isValidId, productNotFoundError} from '../helpers/index.js'
+import products from '../models/prodcutsModel.js';
 
 const createProduct = async (req, res) => {
     //console.log('Creating product...');
@@ -29,7 +28,9 @@ const createProduct = async (req, res) => {
 
 const getAllProducts = async (req, res) => {
     try {
-        await res.json(products);
+        const poducts = await Product.find();
+
+        res.json(products);
 
     } catch (error) {
         console.log(error.message);
