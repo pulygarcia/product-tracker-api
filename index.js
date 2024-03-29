@@ -2,6 +2,7 @@ import express from 'express'
 import productRoutes from './routes/productsRoutes.js';
 import {db} from './config/db.js'
 import dotenv from 'dotenv'
+import cors from 'cors'
 import colors from 'colors'
 
 //Habilitar variables de entorno
@@ -12,6 +13,25 @@ const app = express();
 
 //Allow read data via body
 app.use(express.json());
+
+//add in cors options avoids urls
+const whiteList = ['http://localhost:5173']
+
+const corsOptions = {
+    origin: function(origin, callback){
+        //console.log(origin);
+        if(whiteList.includes(origin)){
+            //allow
+            callback(null, true);
+        }else{
+            //dont allow
+            callback(new Error('Error de CORS'))
+        }
+    }
+}
+
+//use cors
+app.use(cors(corsOptions))
 
 //Connect DB
 db();

@@ -28,7 +28,7 @@ const createProduct = async (req, res) => {
 
 const getAllProducts = async (req, res) => {
     try {
-        const poducts = await Product.find();
+        const products = await Product.find();
 
         res.json(products);
 
