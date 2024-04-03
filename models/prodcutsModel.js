@@ -9,6 +9,7 @@ const productsSchema = mongoose.Schema({
     price:{
         type: Number,
         required: true,
+        min: 1
     },
     category:{
         type: String,
@@ -18,11 +19,7 @@ const productsSchema = mongoose.Schema({
     quantity:{
         type: Number,
         required: true,
-    },
-    image:{
-        type: String,
-        required: true,
-        trim: true
+        min: 1
     },
     brand:{
         type: String,

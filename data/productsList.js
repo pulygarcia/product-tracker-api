@@ -1,7 +1,6 @@
 export const products = [
     { 
         name: 'Keyboard',
-        image: 'https://i.blogs.es/4e0408/pc-9/450_1000.webp',
         price: 50,
         brand: 'Redragon',
         category: 'Peripherals',
@@ -9,7 +8,6 @@ export const products = [
     },
     { 
         name: 'Mouse',
-        image: 'https://i.blogs.es/4e0408/pc-9/450_1000.webp',
         price: 30,
         brand: 'Logitech',
         category: 'Peripherals',
@@ -17,7 +15,6 @@ export const products = [
     },
     { 
         name: 'Monitor 24"',
-        image: 'https://i.blogs.es/4e0408/pc-9/450_1000.webp',
         price: 120,
         brand: 'Samsung',
         category: 'Peripherals',
@@ -25,7 +22,6 @@ export const products = [
     },
     { 
         name: 'Gabinete Versa c22',
-        image: 'https://i.blogs.es/4e0408/pc-9/450_1000.webp',
         price: 230,
         brand: 'Thermaltake',
         category: 'Hardware',
