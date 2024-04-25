@@ -1,5 +1,6 @@
 import express from 'express'
 import productRoutes from './routes/productsRoutes.js';
+import authRoutes from './routes/authRoutes.js';
 import {db} from './config/db.js'
 import dotenv from 'dotenv'
 import cors from 'cors'
@@ -15,7 +16,7 @@ const app = express();
 app.use(express.json());
 
 //add in cors options avoids urls
-const whiteList = ['http://localhost:5173']
+const whiteList = process.argv[2] === '--postman' ? [process.env.FRONTEND_URL, undefined] : [process.env.FRONTEND_URL]
 
 const corsOptions = {
     origin: function(origin, callback){
@@ -37,8 +38,9 @@ app.use(cors(corsOptions))
 db();
 
 
-//define route
+//define routes
 app.use('/api/products', productRoutes);
+app.use('/api/auth', authRoutes);
 
 
 //define port
