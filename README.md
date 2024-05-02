@@ -1,4 +1,6 @@
-# Simple MVC Rest Api Products control
+# MVC Rest Api Products control
+Endpoints for products list
+Endpoints for users authentication
 
 *Node.js*
 *Express*

@@ -53,7 +53,7 @@ const verifyUser = async (req, res) => {
     const user = await User.findOne({token: req.params.token});
 
     if(!user){
-        const error = new Error('User not found');
+        const error = new Error('Invalid token');
 
         return res.status(400).json({
             msg : error.message
@@ -76,7 +76,43 @@ const verifyUser = async (req, res) => {
     }
 }
 
+const login = async (req, res) => {
+    //check if user exists
+    const user = await User.findOne({email: req.body.email});
+    if(!user){
+        const error = new Error('User not found');
+
+        return res.status(400).json({
+            msg : error.message
+        })
+    }
+
+    //check if is already verified
+    if(user.verified == false){
+        const error = new Error('Please verify your account');
+
+        return res.status(400).json({
+            msg : error.message
+        })
+    }
+
+    //check the password using the bcrypt method from the model
+    if(await user.checkPassword(req.body.password)){
+        return res.json({
+            msg : "User authenticated"
+        });
+
+    }else{
+        const error = new Error('Wrong password');
+
+        return res.status(400).json({
+            msg : error.message
+        })
+    }
+}
+
 export {
     register,
-    verifyUser
+    verifyUser,
+    login
 }
