@@ -1,4 +1,5 @@
 import User from '../models/userModel.js'
+import { sendVerificationEmail } from '../emails/authEmailServices.js';
 
 const register =  async (req, res) => {
     //check if there are empty fields
@@ -34,7 +35,9 @@ const register =  async (req, res) => {
     //create the user and save it
     try {
         const user = new User(req.body);
-        await user.save();
+        const savedUser = await user.save();
+
+        sendVerificationEmail({email: savedUser.email, token: savedUser.token});
 
         res.json({
             msg: 'User was created, please check your Email'
@@ -43,8 +46,37 @@ const register =  async (req, res) => {
     } catch (error) {
         console.log(error);
     }
-} 
+}
+
+const verifyUser = async (req, res) => {
+    //console.log(req.params.token);
+    const user = await User.findOne({token: req.params.token});
+
+    if(!user){
+        const error = new Error('User not found');
+
+        return res.status(400).json({
+            msg : error.message
+        })
+    }
+
+    //user has been verified
+    try {
+        user.verified = true;
+        user.token = ''; //token has only one use, so remove it when was verified
+
+        await user.save();
+
+        return res.json({
+            msg : "Verified correctly"
+        });
+
+    } catch (error) {
+        console.log(error);
+    }
+}
 
 export {
-    register
+    register,
+    verifyUser
 }
