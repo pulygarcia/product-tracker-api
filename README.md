@@ -1,6 +1,9 @@
 # MVC Rest Api Products control
-Endpoints for products list
-Endpoints for users authentication
+Endpoints for products list and user authentication
+
+---
+frontend repo: [https://github.com/pulygarcia/product-tracker-mevn-front]
+---
 
 *Node.js*
 *Express*
