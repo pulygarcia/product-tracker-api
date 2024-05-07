@@ -118,8 +118,14 @@ const login = async (req, res) => {
     }
 }
 
+const user = async (req, res) => {
+    //get the user instance saved in the req (which has been created in auth middleware)
+    console.log(req.user);
+}
+
 export {
     register,
     verifyUser,
-    login
+    login,
+    user
 }
