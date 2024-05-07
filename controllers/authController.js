@@ -1,5 +1,6 @@
 import User from '../models/userModel.js'
 import { sendVerificationEmail } from '../emails/authEmailServices.js';
+import { generateJWT } from '../helpers/index.js';
 
 const register =  async (req, res) => {
     //check if there are empty fields
@@ -98,9 +99,15 @@ const login = async (req, res) => {
 
     //check the password using the bcrypt method from the model
     if(await user.checkPassword(req.body.password)){
+        // return res.json({
+        //     msg : "User authenticated"
+        // });
+
+        const token = generateJWT(user._id);
+        //return jwt in order to save it in LocalStorage in frontend
         return res.json({
-            msg : "User authenticated"
-        });
+            token
+        })
 
     }else{
         const error = new Error('Wrong password');
