@@ -27,7 +27,7 @@ const generateID = () => {
 }
 
 const generateJWT = (userId) => {
-    const token = jwt.sign({id: userId}, process.env.PRIVATE_KEY, {expiresIn: 30});
+    const token = jwt.sign({id: userId}, process.env.PRIVATE_KEY, {expiresIn: '30d'});
 
     return token;
 }
